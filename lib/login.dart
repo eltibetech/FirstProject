@@ -1,66 +1,125 @@
 import 'package:flutter/material.dart';
-// import './main.dart';
+import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-        centerTitle: true,
-        backgroundColor: Colors.green,
+    return MaterialApp(
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        useMaterial3: true,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Text(
-              'Please Login here.',
-              style: TextStyle(fontFamily: 'Georgia', fontSize: 30),
-              ),
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Enter Username',
-              ),
-            ),
-            const SizedBox(height: 15),
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Enter password',
-              ),
-            ),
-            const Text('forgot',
-            textAlign: TextAlign.right,
-            ),
-            ButtonTheme(
-              minWidth: 200.0,
-              height: 100.0,
-              
-              child: ElevatedButton(
-                onPressed: () {
-                  //submit login
-              
-                },
-                child: const Text('Login',
-                style: TextStyle(fontSize: 20,),
-                ),
-              ),
-            )
-            
-          ]),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('User login'),
+          centerTitle: true,
+          leading: BackButton(onPressed: () => Navigator.of(context).pop()),
+          backgroundColor: Colors.teal,
+          
         ),
-
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text(
+              'Login',
+              style: TextStyle(
+                  fontSize: 35,
+                  color: Colors.teal,
+                  fontWeight: FontWeight.bold),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Form(
+                  child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: TextFormField(
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(
+                        labelText: 'Email/Phone',
+                        hintText: 'Enter email or phone',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (value) {},
+                      validator: (value) {
+                        return value!.isEmpty
+                            ? 'Please enter Email or phone'
+                            : null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: TextFormField(
+                      keyboardType: TextInputType.visiblePassword,
+                      decoration: const InputDecoration(
+                        labelText: 'Password',
+                        hintText: 'Enter password',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (value) {},
+                      validator: (value) {
+                        return value!.isEmpty ? 'Please enter password' : null;
+                      },
+                    ),
+                  ),
+                  const Text(
+                    'forgot',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50),
+                    child: MaterialButton(
+                      minWidth: double.infinity,
+                      onPressed: () {
+                        // navigate to login
+                      },
+                      color: Colors.teal,
+                      textColor: Colors.white,
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ), 
+                      ),
+                    ),
+                  ),
+                  
+                ],
+              )),
+            )
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            //navigate to signUp page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SignUpPage()),
+            );
+          },
+          child: const Icon(Icons.arrow_forward_ios_outlined),
+        ),
       ),
-      
     );
   }
 }

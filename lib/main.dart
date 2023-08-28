@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './login.dart';
+import 'login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -37,7 +37,7 @@ class MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('The salon'),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.teal,
       ),
       body: Center(
         child: Column(
