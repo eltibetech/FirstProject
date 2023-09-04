@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'search.dart';
+import 'sectiondisplay.dart';
+import 'navbar.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -8,44 +11,79 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  final List<Map> myProducts =
+      List.generate(300, (index) => {"id": index, "name": "Product $index"})
+          .toList();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-        useMaterial3: true,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          leading: BackButton(onPressed: () => Navigator.of(context).pop()),
-          title: const Text(
-            'Home',
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.teal,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+          useMaterial3: true,
         ),
-        // body: Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-          
-        // ),
-        bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem> [
-          BottomNavigationBarItem(icon: Icon(Icons.home),
-          label: 'Home',
+        home: Scaffold(
+          drawer: NavBar(),
+          appBar: AppBar(
+            title: const Text(
+              'Home',
+              textAlign: TextAlign.left,
+            ),
+            actions: [
+              IconButton(
+                  onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const SearchPage())),
+                  icon: const Icon(
+                    Icons.search,
+                    size: 20,
+                  ))
+            ],
+            backgroundColor: Colors.teal,
           ),
-          // BottomNavigationBarItem(icon: Icon(Icons.message_rounded),
-          // label: 'Messages',
-          // ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category_rounded),
-            label: 'Categories',
+          body: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 20,
+              horizontal: 10,
+            ),
+            // implement gridview.builder
+            child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  // crossAxisCount: 2,
+                  maxCrossAxisExtent: 200,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                ),
+                itemCount: myProducts.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  return Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Text(myProducts[index]["name"]),
+                  );
+                }),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
-        ]),
-      ),
-    );
+          bottomNavigationBar:
+              BottomNavigationBar(items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            // BottomNavigationBarItem(icon: Icon(Icons.message_rounded),
+            // label: 'Messages',
+            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.category_rounded),
+              label: 'Categories',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              label: 'Account',
+            ),
+          ]),
+        )
+        );
   }
 }
